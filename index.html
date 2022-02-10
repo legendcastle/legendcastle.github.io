@@ -1,9 +1,73 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <style>
+            table{margin:auto}
+            h1,.calcRow{text-align:center}
+            #calc{line-height:30pt}
+        </style>
+        <script>
+            function inpV(id){
+                var inpu = document.querySelector('#'+id);
+                if(inpu===null)return null;
+                return inpu.value;
+            }
+            function setInpV(id,v){
+                var inpu = document.querySelector('#'+id);
+                if(inpu===null)return;         
+                inpu.value =  v;    
+            }
+            function calcNormal(){
+                var p1 =[inpV("x1"),inpV("y1"),inpV("z1")];
+                var p2 =[inpV("x2"),inpV("y2"),inpV("z2")];
+                var p3 = [inpV("x3"),inpV("y3"),inpV("z3")];
+                var v1 = [p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2]];
+                var v2 = [p3[0]-p1[0],p3[1]-p1[1],p3[2]-p1[2]];
+                var a = v1[1]*v2[2]-v2[1]*v1[2];
+                var b = v1[2]*v2[0]-v2[2]*v1[0];
+                var c = v1[0]*v2[1]-v2[0]*v1[1];
+                var l = Math.sqrt(a*a+b*b+c*c);
+                setInpV("xn",a/l);
+                setInpV("yn",b/l);
+                setInpV("zn",c/l);
+            }
+        </script>
     </head>
-    <body>
-        Testing!
+    <body >
+        <h1><img src="img/logo.png" width="30" height="30" />Normal Vector Calculator</h1>
+        <form action="javascript:calcNormal()">
+        <table>
+            <thead>
+                <td>Point</td><td>X</td><td>Y</td><td>Z</td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Point 1: </td>
+                    <td><input type="number" id="x1" required="required" /></td>
+                    <td><input type="number" id="y1" required="required" /></td>
+                    <td><input type="number" id="z1" required="required" /></td>
+                </tr>
+                <tr>
+                    <td>Point 2: </td>
+                    <td><input type="number" id="x2" required="required" /></td>
+                    <td><input type="number" id="y2" required="required" /></td>
+                    <td><input type="number" id="z2" required="required" /></td>
+                </tr>
+                <tr>
+                    <td>Point 3: </td>
+                    <td><input type="number" id="x3" required="required" /></td>
+                    <td><input type="number" id="y3" required="required" /></td>
+                    <td><input type="number" id="z3" required="required" /></td>
+                </tr>
+                <tr><td colspan="4" class="calcRow"><button id="calc">Calculate!</button></td></tr>
+                <tr>
+                    <td>Normal Vec: </td> 
+                    <td><input type="number" id="xn" readonly /></td>
+                    <td><input type="number" id="yn" readonly /></td>
+                    <td><input type="number" id="zn" readonly /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
     </body>
 </html>
